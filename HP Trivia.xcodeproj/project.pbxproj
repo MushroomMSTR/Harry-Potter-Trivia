@@ -11,6 +11,8 @@
 		7476622B2A6B26C000F0F0EA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7476622A2A6B26C000F0F0EA /* ContentView.swift */; };
 		7476622D2A6B26C200F0F0EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7476622C2A6B26C200F0F0EA /* Assets.xcassets */; };
 		747662302A6B26C200F0F0EA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7476622F2A6B26C200F0F0EA /* Preview Assets.xcassets */; };
+		747662372A6B26ED00F0F0EA /* Audio in Resources */ = {isa = PBXBuildFile; fileRef = 747662362A6B26ED00F0F0EA /* Audio */; };
+		747662392A6B26FB00F0F0EA /* trivia.json in Resources */ = {isa = PBXBuildFile; fileRef = 747662382A6B26FB00F0F0EA /* trivia.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		7476622A2A6B26C000F0F0EA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7476622C2A6B26C200F0F0EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7476622F2A6B26C200F0F0EA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		747662362A6B26ED00F0F0EA /* Audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Audio; sourceTree = "<group>"; };
+		747662382A6B26FB00F0F0EA /* trivia.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trivia.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +57,9 @@
 			children = (
 				747662282A6B26C000F0F0EA /* HP_TriviaApp.swift */,
 				7476622A2A6B26C000F0F0EA /* ContentView.swift */,
+				747662382A6B26FB00F0F0EA /* trivia.json */,
 				7476622C2A6B26C200F0F0EA /* Assets.xcassets */,
+				747662362A6B26ED00F0F0EA /* Audio */,
 				7476622E2A6B26C200F0F0EA /* Preview Content */,
 			);
 			path = "HP Trivia";
@@ -125,7 +131,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				747662372A6B26ED00F0F0EA /* Audio in Resources */,
 				747662302A6B26C200F0F0EA /* Preview Assets.xcassets in Resources */,
+				747662392A6B26FB00F0F0EA /* trivia.json in Resources */,
 				7476622D2A6B26C200F0F0EA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
