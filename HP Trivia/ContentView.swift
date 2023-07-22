@@ -14,7 +14,9 @@ struct ContentView: View {
 	@State private var audioPlayer: AVAudioPlayer!
 	@State private var scalePlayButton = false
 	@State private var moveBackgroundImage = false
-	
+	@State private var isMuted = false // State to track if the audio is muted.
+	@Environment(\.colorScheme) var colorScheme // determine the current color scheme.
+
 	var body: some View {
 		// Use GeometryReader to adapt the layout to the available space.
 		GeometryReader { geo in
@@ -35,19 +37,47 @@ struct ContentView: View {
 				// Main content container.
 				VStack {
 					// Game title and bolt icon.
-					VStack {
-						Image(systemName: "bolt.fill")
-							.font(.largeTitle)
-							.imageScale(.large)
+					ZStack {
+						HStack {
+							Spacer()
+							
+							// Here we insert the mute/unmute button.
+							Button(action: {
+								// Toggle the isMuted state.
+								isMuted.toggle()
+								// If the audio is to be muted, pause the audio player. Otherwise, play the audio.
+								if isMuted {
+									audioPlayer.pause()
+								} else {
+									audioPlayer.play()
+								}
+							}) {
+								// Show the "play.slash" icon when the audio is muted and the "play" icon when it's not muted.
+								Image(systemName: isMuted ? "play.slash.fill" : "play.fill")
+									.font(.largeTitle)
+									.padding()
+									.foregroundColor(colorScheme == .dark ? .white : .black) // Set color based on color scheme.
+									.shadow(radius: 2)
+							}
+							.padding(25)
+							.padding(.bottom, 70)
+						}
 						
-						Text("HP")
-							.font(.custom(Constants.hpFont, size: 70))
-							.padding(.bottom, -50)
-						
-						Text("Trivia")
-							.font(.custom(Constants.hpFont, size: 60))
+						VStack {
+							Image(systemName: "bolt.fill")
+								.font(.largeTitle)
+								.imageScale(.large)
+							
+							Text("HP")
+								.font(.custom(Constants.hpFont, size: 70))
+								.padding(.bottom, -50)
+							
+							Text("Trivia")
+								.font(.custom(Constants.hpFont, size: 60))
+						}
+						.padding(.top, 70)
 					}
-					.padding(.top, 70)
+					.frame(width: geo.size.width)
 					
 					Spacer()
 					
