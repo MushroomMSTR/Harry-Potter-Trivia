@@ -6,17 +6,35 @@
 //
 
 import SwiftUI
+import AVKit
 
+// MARK: - ContentView
 struct ContentView: View {
-    var body: some View {
+	// Create State variables for the audio player, button animation, and background image animation.
+	@State private var audioPlayer: AVAudioPlayer!
+	@State private var scalePlayButton = false
+	@State private var moveBackgroundImage = false
+	
+	var body: some View {
+		// Use GeometryReader to adapt the layout to the available space.
 		GeometryReader { geo in
+			// Main container for all elements.
 			ZStack {
+				// Background image that moves horizontally.
 				Image("hogwarts")
 					.resizable()
 					.frame(width: geo.size.width * 3, height: geo.size.height)
 					.padding(.top, 3)
+					.offset(x: moveBackgroundImage ? geo.size.width/1.1 : -geo.size.width/1.1)
+					.onAppear {
+						withAnimation(.linear(duration: 60).repeatForever()) {
+							moveBackgroundImage.toggle()
+						}
+					}
 				
+				// Main content container.
 				VStack {
+					// Game title and bolt icon.
 					VStack {
 						Image(systemName: "bolt.fill")
 							.font(.largeTitle)
@@ -33,6 +51,7 @@ struct ContentView: View {
 					
 					Spacer()
 					
+					// Section for recent scores.
 					VStack {
 						Text("Recent Scores")
 							.font(.title2)
@@ -50,11 +69,13 @@ struct ContentView: View {
 					
 					Spacer()
 					
+					// Section for buttons (Play, Info, Settings).
 					HStack {
 						Spacer()
 						
+						// Info button.
 						Button {
-							// Show instructions screen
+							// Show instructions screen.
 						} label: {
 							Image(systemName: "info.circle.fill")
 								.font(.largeTitle)
@@ -64,8 +85,9 @@ struct ContentView: View {
 						
 						Spacer()
 						
+						// Play button.
 						Button {
-							// Start new game
+							// Start new game.
 						} label: {
 							Text("Play")
 								.font(.largeTitle)
@@ -76,11 +98,18 @@ struct ContentView: View {
 								.cornerRadius(10)
 								.shadow(radius: 5)
 						}
+						.scaleEffect(scalePlayButton ? 1.2 : 1)
+						.onAppear {
+							withAnimation(.easeInOut(duration: 1.3).repeatForever()) {
+								scalePlayButton.toggle()
+							}
+						}
 						
 						Spacer()
 						
+						// Settings button.
 						Button {
-							// Show settings screen
+							// Show settings screen.
 						} label: {
 							Image(systemName: "gearshape.fill")
 								.font(.largeTitle)
@@ -98,7 +127,29 @@ struct ContentView: View {
 			.frame(width: geo.size.width, height: geo.size.height)
 		}
 		.ignoresSafeArea()
-    }
+		.onAppear {
+			// Call function to start playing audio.
+			playAudio()
+		}
+	}
+	
+	// Function to initialize and play audio.
+	private func playAudio() {
+		if let sound = Bundle.main.path(forResource: "Audio/magic-in-the-air", ofType: "mp3") {
+			do {
+				// Try to initialize the audio player
+				audioPlayer = try AVAudioPlayer(contentsOf: URL(filePath: sound))
+				// Set the number of loops and play the audio
+				audioPlayer.numberOfLoops = -1
+				audioPlayer.play()
+			} catch {
+				// This block will execute if any error occurs
+				print("There was an issue playing the sound: \(error)")
+			}
+		} else {
+			print("Couldn't find the sound file")
+		}
+	}
 }
 
 struct ContentView_Previews: PreviewProvider {
