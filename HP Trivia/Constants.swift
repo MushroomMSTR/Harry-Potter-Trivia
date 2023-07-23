@@ -38,8 +38,8 @@ extension Button {
 			.foregroundColor(.white)
 			.padding(.vertical, 7)
 			.padding(.horizontal, 50)
-			.background(.brown)
-			.cornerRadius(10)
+			.buttonStyle(.borderedProminent)
+			.tint(.brown)
 			.shadow(radius: 5)
 	}
 }
