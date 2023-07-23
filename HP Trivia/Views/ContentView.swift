@@ -19,6 +19,7 @@ struct ContentView: View {
 	@State private var animateViewsIn = false
 	@State private var showInstruction = false
 	@State private var showSettings = false
+	@State private var playGame = false
 
 	var body: some View {
 		// Use GeometryReader to adapt the layout to the available space.
@@ -149,6 +150,7 @@ struct ContentView: View {
 								// Play button.
 								Button {
 									// Start new game.
+									playGame.toggle()
 								} label: {
 									Text("Play")
 								}
@@ -160,6 +162,9 @@ struct ContentView: View {
 									}
 								}
 								.transition(.offset(y: geo.size.height/3))
+								.fullScreenCover(isPresented: $playGame) {
+									Gameplay()
+								}
 							}
 						}
 						.animation(.easeOut(duration: 0.7).delay(2), value: animateViewsIn)
