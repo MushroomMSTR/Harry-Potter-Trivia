@@ -18,6 +18,7 @@ struct ContentView: View {
 	@Environment(\.colorScheme) var colorScheme // determine the current color scheme.
 	@State private var animateViewsIn = false
 	@State private var showInstruction = false
+	@State private var showSettings = false
 
 	var body: some View {
 		// Use GeometryReader to adapt the layout to the available space.
@@ -170,6 +171,7 @@ struct ContentView: View {
 								// Settings button.
 								Button {
 									// Show settings screen.
+									showSettings.toggle()
 								} label: {
 									Image(systemName: "gearshape.fill")
 										.font(.largeTitle)
@@ -177,6 +179,9 @@ struct ContentView: View {
 										.shadow(radius: 5)
 								}
 								.transition(.offset(x: geo.size.width/4))
+								.sheet(isPresented: $showSettings) {
+									Settings()
+								}
 							}
 						}
 						.animation(.easeOut(duration: 0.7).delay(2.7), value: animateViewsIn)
