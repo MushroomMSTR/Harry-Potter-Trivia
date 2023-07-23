@@ -14,6 +14,7 @@
 		747662372A6B26ED00F0F0EA /* Audio in Resources */ = {isa = PBXBuildFile; fileRef = 747662362A6B26ED00F0F0EA /* Audio */; };
 		747662392A6B26FB00F0F0EA /* trivia.json in Resources */ = {isa = PBXBuildFile; fileRef = 747662382A6B26FB00F0F0EA /* trivia.json */; };
 		7476623B2A6BC3AC00F0F0EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7476623A2A6BC3AC00F0F0EA /* Constants.swift */; };
+		74C587042A6C78CE00F0DB36 /* Instructions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C587032A6C78CE00F0DB36 /* Instructions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		747662362A6B26ED00F0F0EA /* Audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Audio; sourceTree = "<group>"; };
 		747662382A6B26FB00F0F0EA /* trivia.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trivia.json; sourceTree = "<group>"; };
 		7476623A2A6BC3AC00F0F0EA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		74C587032A6C78CE00F0DB36 /* Instructions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instructions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +59,8 @@
 		747662272A6B26C000F0F0EA /* HP Trivia */ = {
 			isa = PBXGroup;
 			children = (
+				74C587022A6C77F700F0DB36 /* Views */,
 				747662282A6B26C000F0F0EA /* HP_TriviaApp.swift */,
-				7476622A2A6B26C000F0F0EA /* ContentView.swift */,
 				7476623A2A6BC3AC00F0F0EA /* Constants.swift */,
 				747662382A6B26FB00F0F0EA /* trivia.json */,
 				7476622C2A6B26C200F0F0EA /* Assets.xcassets */,
@@ -74,6 +76,15 @@
 				7476622F2A6B26C200F0F0EA /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		74C587022A6C77F700F0DB36 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7476622A2A6B26C000F0F0EA /* ContentView.swift */,
+				74C587032A6C78CE00F0DB36 /* Instructions.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +161,7 @@
 			files = (
 				7476622B2A6B26C000F0F0EA /* ContentView.swift in Sources */,
 				747662292A6B26C000F0F0EA /* HP_TriviaApp.swift in Sources */,
+				74C587042A6C78CE00F0DB36 /* Instructions.swift in Sources */,
 				7476623B2A6BC3AC00F0F0EA /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

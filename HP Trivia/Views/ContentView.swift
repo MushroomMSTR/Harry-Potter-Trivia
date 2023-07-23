@@ -17,6 +17,7 @@ struct ContentView: View {
 	@State private var isMuted = false // State to track if the audio is muted.
 	@Environment(\.colorScheme) var colorScheme // determine the current color scheme.
 	@State private var animateViewsIn = false
+	@State private var showInstruction = false
 
 	var body: some View {
 		// Use GeometryReader to adapt the layout to the available space.
@@ -106,7 +107,7 @@ struct ContentView: View {
 								
 							}
 							.font(.title3)
-							.padding(.horizontal) 
+							.padding(.horizontal)
 							.foregroundColor(.white)
 							.background(.black.opacity(0.7))
 							.cornerRadius(15)
@@ -125,7 +126,7 @@ struct ContentView: View {
 							if animateViewsIn {
 								// Info button.
 								Button {
-									// Show instructions screen.
+									showInstruction.toggle() // Show instructions screen.
 								} label: {
 									Image(systemName: "info.circle.fill")
 										.font(.largeTitle)
@@ -133,6 +134,9 @@ struct ContentView: View {
 										.shadow(radius: 5)
 								}
 								.transition(.offset(x: -geo.size.width/4))
+								.sheet(isPresented: $showInstruction) {
+									Instructions()
+								}
 							}
 						}
 						.animation(.easeOut(duration: 0.7).delay(2.7), value: animateViewsIn)
@@ -146,14 +150,8 @@ struct ContentView: View {
 									// Start new game.
 								} label: {
 									Text("Play")
-										.font(.largeTitle)
-										.foregroundColor(.white)
-										.padding(.vertical, 7)
-										.padding(.horizontal, 50)
-										.background(.brown)
-										.cornerRadius(10)
-										.shadow(radius: 5)
 								}
+								.playButton()
 								.scaleEffect(scalePlayButton ? 1.2 : 1)
 								.onAppear {
 									withAnimation(.easeInOut(duration: 1.3).repeatForever()) {
@@ -196,7 +194,7 @@ struct ContentView: View {
 		.onAppear {
 			animateViewsIn = true // When you launch the app, the logo animation is played
 			// Call function to start playing audio.
-			playAudio()
+			//playAudio()
 		}
 	}
 	
