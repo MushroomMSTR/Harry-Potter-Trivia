@@ -18,6 +18,7 @@ struct Gameplay: View {
 	@State private var movePointToScore = false
 	@State private var revealHint = false
 	@State private var revealBook = false
+	@State private var wrongAnswersTapped: [Int] = []
 	
 	let tempAnswers = [true, false, false, false]
 	
@@ -53,6 +54,7 @@ struct Gameplay: View {
 								.multilineTextAlignment(.center)
 								.padding()
 								.transition(.scale)
+								.opacity(tappedCorrectAnswer ? 0.1 : 1)
 						}
 					}
 					.animation(.easeOut(duration: 2), value: animateViewsIn)
@@ -95,6 +97,8 @@ struct Gameplay: View {
 											.opacity(revealHint ? 1 : 0)
 											.scaleEffect(revealHint ? 1.33 : 1)
 									)
+									.opacity(tappedCorrectAnswer ? 0.1 : 1)
+									.disabled(tappedCorrectAnswer)
 							}
 						}
 						.animation(.easeOut(duration: 1.5).delay(2), value: animateViewsIn)
@@ -138,6 +142,8 @@ struct Gameplay: View {
 											.opacity(revealBook ? 1 : 0)
 											.scaleEffect(revealBook ? 1.33 : 1)
 									)
+									.opacity(tappedCorrectAnswer ? 0.1 : 1)
+									.disabled(tappedCorrectAnswer)
 							}
 						}
 						.animation(.easeOut(duration: 1.5).delay(2), value: animateViewsIn)
@@ -178,9 +184,17 @@ struct Gameplay: View {
 											.multilineTextAlignment(.center)
 											.padding(10)
 											.frame(width: geo.size.width/2.15, height: 80)
-											.background(.green.opacity(0.5))
+											.background(wrongAnswersTapped.contains(i) ? .red.opacity(0.5) : .green.opacity(0.5))
 											.cornerRadius(25)
 											.transition(.scale)
+											.onTapGesture {
+												withAnimation(.easeOut(duration: 1)) {
+													wrongAnswersTapped.append(i)
+												}
+											}
+											.scaleEffect(wrongAnswersTapped.contains(i) ? 0.8 : 1)
+											.disabled(tappedCorrectAnswer || wrongAnswersTapped.contains(i))
+											.opacity(tappedCorrectAnswer ? 0.1 : 1)
 									}
 								}
 								.animation(.easeOut(duration: 1).delay(1.5), value: animateViewsIn)
@@ -249,7 +263,16 @@ struct Gameplay: View {
 						VStack {
 							if tappedCorrectAnswer {
 								Button("Next Level >") {
-									// TODO: Reset Level for next question
+									animateViewsIn = false
+									tappedCorrectAnswer = false
+									revealHint = false
+									revealBook = false
+									movePointToScore = false
+									wrongAnswersTapped = []
+									
+									DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+										animateViewsIn = true
+									}
 								}
 								.buttonStyle(.borderedProminent)
 								.tint(.blue.opacity(0.5))
