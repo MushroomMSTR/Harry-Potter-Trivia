@@ -12,6 +12,7 @@ import AVKit
 struct ContentView: View {
 	
 	@EnvironmentObject private var store: Store
+	@EnvironmentObject private var game: Game
 	// Create State variables for the audio player, button animation, and background image animation.
 	@State private var audioPlayer: AVAudioPlayer!
 	@State private var scalePlayButton = false
@@ -166,6 +167,7 @@ struct ContentView: View {
 								.transition(.offset(y: geo.size.height/3))
 								.fullScreenCover(isPresented: $playGame) {
 									Gameplay()
+										.environmentObject(game)
 								}
 							}
 						}
@@ -235,6 +237,7 @@ struct ContentView_Previews: PreviewProvider {
 		VStack {
 			ContentView()
 				.environmentObject(Store())
+				.environmentObject(Game())
 		}
     }
 }
