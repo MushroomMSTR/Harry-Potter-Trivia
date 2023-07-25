@@ -1,0 +1,78 @@
+{
+  "identifier" : "1F5C96FD",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : true,
+      "internalID" : "9DB1779C",
+      "localizations" : [
+        {
+          "description" : "Unlock trivia questions for HP4",
+          "displayName" : "HP4 Questions",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "hp4",
+      "referenceName" : "HP4",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : true,
+      "internalID" : "6B7BA2A7",
+      "localizations" : [
+        {
+          "description" : "Unlock trivia questions for HP5",
+          "displayName" : "HP5 Questions",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "hp5",
+      "referenceName" : "HP5",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : true,
+      "internalID" : "7F01BA28",
+      "localizations" : [
+        {
+          "description" : "Unlock trivia questions for HP6",
+          "displayName" : "HP6 Questions",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "hp6",
+      "referenceName" : "HP6",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : true,
+      "internalID" : "E25CC2C9",
+      "localizations" : [
+        {
+          "description" : "Unlock trivia questions for HP7",
+          "displayName" : "HP7",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "hp7",
+      "referenceName" : "HP7",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}
