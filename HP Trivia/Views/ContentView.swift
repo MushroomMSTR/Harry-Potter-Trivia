@@ -207,7 +207,7 @@ struct ContentView: View {
 		.onAppear {
 			animateViewsIn = true // When you launch the app, the logo animation is played
 			// Call function to start playing audio.
-			// playAudio()
+			 playAudio()
 		}
 	}
 	
