@@ -51,6 +51,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		747554E32A7163E1008E8648 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				7476623A2A6BC3AC00F0F0EA /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		747554E42A716445008E8648 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7404EAA62A70741800E59712 /* Game.swift */,
+				742B36622A700D390054B284 /* Store.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		747554E52A7164F3008E8648 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7404EAA42A703C3500E59712 /* Question.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		7476621C2A6B26C000F0F0EA = {
 			isa = PBXGroup;
 			children = (
@@ -71,11 +96,10 @@
 			isa = PBXGroup;
 			children = (
 				747662282A6B26C000F0F0EA /* HP_TriviaApp.swift */,
+				747554E52A7164F3008E8648 /* Models */,
 				74C587022A6C77F700F0DB36 /* Views */,
-				7476623A2A6BC3AC00F0F0EA /* Constants.swift */,
-				7404EAA62A70741800E59712 /* Game.swift */,
-				742B36622A700D390054B284 /* Store.swift */,
-				7404EAA42A703C3500E59712 /* Question.swift */,
+				747554E42A716445008E8648 /* ViewModels */,
+				747554E32A7163E1008E8648 /* Constants */,
 				742B36612A7002AE0054B284 /* HPConfig.storekit */,
 				747662382A6B26FB00F0F0EA /* trivia.json */,
 				7476622C2A6B26C200F0F0EA /* Assets.xcassets */,
