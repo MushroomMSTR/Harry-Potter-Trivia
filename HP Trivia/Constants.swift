@@ -34,14 +34,14 @@ extension Button {
 			.shadow(radius: 2)
 	}
 	
-	func playButton() -> some View {
+	@MainActor func playButton(store: Store) -> some View {
 		self
 			.font(.largeTitle)
 			.foregroundColor(.white)
 			.padding(.vertical, 7)
 			.padding(.horizontal, 50)
 			.buttonStyle(.borderedProminent)
-			.tint(.brown)
+			.tint(store.books.contains(.active) ? .brown : .white)
 			.shadow(radius: 5)
 	}
 }

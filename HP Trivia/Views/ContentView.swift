@@ -153,11 +153,13 @@ struct ContentView: View {
 								// Play button.
 								Button {
 									// Start new game.
+									filterQuestions()
+									game.startGame()
 									playGame.toggle()
 								} label: {
 									Text("Play")
 								}
-								.playButton()
+								.playButton(store: store)
 								.scaleEffect(scalePlayButton ? 1.2 : 1)
 								.onAppear {
 									withAnimation(.easeInOut(duration: 1.3).repeatForever()) {
@@ -169,6 +171,7 @@ struct ContentView: View {
 									Gameplay()
 										.environmentObject(game)
 								}
+								.disabled(store.books.contains(.active) ? false : true)
 							}
 						}
 						.animation(.easeOut(duration: 0.7).delay(2), value: animateViewsIn)
@@ -200,6 +203,17 @@ struct ContentView: View {
 					}
 					.frame(width: geo.size.width)
 					
+					VStack {
+						if animateViewsIn {
+							if store.books.contains(.active) == false {
+								Text("No questions available. Go to settings. ⬆️")
+									.multilineTextAlignment(.center)
+									.transition(.opacity)
+							}
+						}
+					}
+					.animation(.easeInOut.delay(3), value: animateViewsIn)
+					
 					Spacer()
 				}
 			}
@@ -229,6 +243,19 @@ struct ContentView: View {
 		} else {
 			print("Couldn't find the sound file")
 		}
+	}
+	
+	private func filterQuestions() {
+		var books: [Int] = []
+		
+		for (index, status) in store.books.enumerated() {
+			if status == .active {
+				books.append(index+1)
+			}
+		}
+		
+		game.filterQuestions(to: books)
+		game.newQuestion()
 	}
 }
 
