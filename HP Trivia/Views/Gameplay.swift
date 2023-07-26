@@ -320,7 +320,9 @@ struct Gameplay: View {
 		.onAppear {
 			animateViewsIn = true
 			
-			playMusic()
+			DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+				playMusic()
+			}
 		}
 	}
 	
