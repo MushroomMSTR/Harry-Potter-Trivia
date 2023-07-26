@@ -5,67 +5,75 @@
 //  Created by NazarStf on 21.07.2023.
 //
 
+// Import the SwiftUI and AVKit frameworks.
+// SwiftUI is used for designing the UI, and AVKit is used for playing audio.
 import SwiftUI
 import AVKit
 
 // MARK: - ContentView
+
+// Define a struct named 'ContentView' which conforms to the 'View' protocol.
 struct ContentView: View {
 	
+	// Declare EnvironmentObject properties for the store and game.
+	// These are observable objects that are shared across the whole app.
 	@EnvironmentObject private var store: Store
 	@EnvironmentObject private var game: Game
-	// Create State variables for the audio player, button animation, and background image animation.
+
+	// Declare State properties for the audio player, animations, and UI states.
 	@State private var audioPlayer: AVAudioPlayer!
 	@State private var scalePlayButton = false
 	@State private var moveBackgroundImage = false
-	@State private var isMuted = false // State to track if the audio is muted.
-	@Environment(\.colorScheme) var colorScheme // determine the current color scheme.
+	@State private var isMuted = false
+	@Environment(\.colorScheme) var colorScheme
 	@State private var animateViewsIn = false
 	@State private var showInstruction = false
 	@State private var showSettings = false
 	@State private var playGame = false
 
+	// MARK: - Body
+
+	// The body property contains the UI elements of the view.
 	var body: some View {
-		// Use GeometryReader to adapt the layout to the available space.
+		// Use GeometryReader to get the size of the view.
 		GeometryReader { geo in
-			// Main container for all elements.
+			// Use ZStack to layer views on top of each other.
 			ZStack {
-				// Background image that moves horizontally.
+				// Background image.
 				Image("hogwarts")
 					.resizable()
 					.frame(width: geo.size.width * 3, height: geo.size.height)
 					.padding(.top, 3)
 					.offset(x: moveBackgroundImage ? geo.size.width/1.1 : -geo.size.width/1.1)
 					.onAppear {
+						// Animate the background image.
 						withAnimation(.linear(duration: 60).repeatForever()) {
 							moveBackgroundImage.toggle()
 						}
 					}
-				
-				// Main content container.
+
+				// Main content of the view.
 				VStack {
-					// Game title and bolt icon.
+					// Title and audio button.
 					ZStack {
 						VStack {
 							if animateViewsIn {
 								HStack {
 									Spacer()
-									
-									// Here we insert the mute/unmute button.
+
+									// Mute/unmute button.
 									Button(action: {
-										// Toggle the isMuted state.
 										isMuted.toggle()
-										// If the audio is to be muted, pause the audio player. Otherwise, play the audio.
 										if isMuted {
 											audioPlayer.pause()
 										} else {
 											audioPlayer.play()
 										}
 									}) {
-										// Show the "play.slash" icon when the audio is muted and the "play" icon when it's not muted.
 										Image(systemName: isMuted ? "play.slash.fill" : "play.fill")
 											.font(.largeTitle)
 											.padding()
-											.foregroundColor(colorScheme == .dark ? .white : .black) // Set color based on color scheme.
+											.foregroundColor(colorScheme == .dark ? .white : .black)
 											.shadow(radius: 2)
 									}
 									.padding(25)
@@ -74,18 +82,19 @@ struct ContentView: View {
 							}
 						}
 						.animation(.easeOut(duration: 0.7).delay(2.7), value: animateViewsIn)
-						
+
+						// Game title.
 						VStack {
 							if animateViewsIn {
 								VStack {
 									Image(systemName: "bolt.fill")
 										.font(.largeTitle)
 										.imageScale(.large)
-									
+
 									Text("HP")
 										.font(.custom(Constants.hpFont, size: 70))
 										.padding(.bottom, -50)
-									
+
 									Text("Trivia")
 										.font(.custom(Constants.hpFont, size: 60))
 								}
@@ -96,20 +105,20 @@ struct ContentView: View {
 						.animation(.easeOut(duration: 0.7).delay(2), value: animateViewsIn)
 					}
 					.frame(width: geo.size.width)
-					
+
 					Spacer()
-					
-					// Section for recent scores.
+
+					// Recent scores.
 					VStack {
 						if animateViewsIn {
 							VStack {
 								Text("Recent Scores")
 									.font(.title2)
-								
+
 								Text("\(game.recentScores[0])")
 								Text("\(game.recentScores[1])")
 								Text("\(game.recentScores[2])")
-								
+
 							}
 							.font(.title3)
 							.padding(.horizontal)
@@ -120,18 +129,18 @@ struct ContentView: View {
 						}
 					}
 					.animation(.linear(duration: 1).delay(4), value: animateViewsIn)
-					
+
 					Spacer()
-					
-					// Section for buttons (Play, Info, Settings).
+
+					// Play, Info, and Settings buttons.
 					HStack {
 						Spacer()
-						
+
+						// Info button.
 						VStack {
 							if animateViewsIn {
-								// Info button.
 								Button {
-									showInstruction.toggle() // Show instructions screen.
+									showInstruction.toggle()
 								} label: {
 									Image(systemName: "info.circle.fill")
 										.font(.largeTitle)
@@ -145,14 +154,13 @@ struct ContentView: View {
 							}
 						}
 						.animation(.easeOut(duration: 0.7).delay(2.7), value: animateViewsIn)
-						
+
 						Spacer()
-						
+
+						// Play button.
 						VStack {
 							if animateViewsIn {
-								// Play button.
 								Button {
-									// Start new game.
 									filterQuestions()
 									game.startGame()
 									playGame.toggle()
@@ -181,14 +189,13 @@ struct ContentView: View {
 							}
 						}
 						.animation(.easeOut(duration: 0.7).delay(2), value: animateViewsIn)
-						
+
 						Spacer()
-						
+
+						// Settings button.
 						VStack {
 							if animateViewsIn {
-								// Settings button.
 								Button {
-									// Show settings screen.
 									showSettings.toggle()
 								} label: {
 									Image(systemName: "gearshape.fill")
@@ -204,11 +211,12 @@ struct ContentView: View {
 							}
 						}
 						.animation(.easeOut(duration: 0.7).delay(2.7), value: animateViewsIn)
-						
+
 						Spacer()
 					}
 					.frame(width: geo.size.width)
-					
+
+					// No questions available message.
 					VStack {
 						if animateViewsIn {
 							if store.books.contains(.active) == false {
@@ -219,7 +227,7 @@ struct ContentView: View {
 						}
 					}
 					.animation(.easeInOut.delay(3), value: animateViewsIn)
-					
+
 					Spacer()
 				}
 			}
@@ -227,30 +235,32 @@ struct ContentView: View {
 		}
 		.ignoresSafeArea()
 		.onAppear {
-			animateViewsIn = true // When you launch the app, the logo animation is played
-			// Call function to start playing audio.
-			 playAudio()
+			animateViewsIn = true
+			playAudio()
+			audioPlayer.volume = 0.3
 		}
 	}
-	
+
+	// MARK: - Audio Player
+
 	// Function to initialize and play audio.
 	private func playAudio() {
 		if let sound = Bundle.main.path(forResource: "Audio/magic-in-the-air", ofType: "mp3") {
 			do {
-				// Try to initialize the audio player
 				audioPlayer = try AVAudioPlayer(contentsOf: URL(filePath: sound))
-				// Set the number of loops and play the audio
 				audioPlayer.numberOfLoops = -1
 				audioPlayer.play()
 			} catch {
-				// This block will execute if any error occurs
 				print("There was an issue playing the sound: \(error)")
 			}
 		} else {
 			print("Couldn't find the sound file")
 		}
 	}
-	
+
+	// MARK: - Filter Questions
+
+	// Function to filter the available questions based on the books that are active.
 	private func filterQuestions() {
 		var books: [Int] = []
 		
@@ -265,12 +275,13 @@ struct ContentView: View {
 	}
 }
 
+// Define a preview for the ContentView.
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
+	static var previews: some View {
 		VStack {
 			ContentView()
 				.environmentObject(Store())
 				.environmentObject(Game())
 		}
-    }
+	}
 }

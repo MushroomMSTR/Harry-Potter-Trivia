@@ -8,38 +8,50 @@
 import Foundation
 import SwiftUI
 
+// MARK: - Game class
 @MainActor
 class Game: ObservableObject {
+
+	// These published properties will update the UI when they change
 	@Published var gameScore = 0
 	@Published var questionScore = 5
 	@Published var recentScores = [0,0,0]
-	
-	private var allQuestions: [Question] = []
-	private var answeredQuestions: [Int] = []
-	private let savePath = FileManager.documentsDirectory.appending(path: "SavedScores")
-	
-	var filteredQuestions: [Question] = []
-	var currentQuestion = Constants.previewQustion
-	var answers: [String] = []
-	
+
+	// Other necessary variables for the game logic
+	private var allQuestions: [Question] = [] // all questions from the JSON file
+	private var answeredQuestions: [Int] = [] // questions already answered
+	private let savePath = FileManager.documentsDirectory.appending(path: "SavedScores") // path to save scores
+
+	// Variables for the current game round
+	var filteredQuestions: [Question] = [] // questions filtered by selected books
+	var currentQuestion = Constants.previewQustion // the current question
+	var answers: [String] = [] // current possible answers
+
+	// The correct answer for the current question
 	var correctAnswer: String {
 		currentQuestion.answers.first(where: { $0.value == true })!.key
 	}
-	
+
+	// MARK: - Initialization
 	init() {
 		decodeQuestions()
 	}
-	
+
+	// MARK: - Game logic functions
+
+	// Starts a new game by resetting scores and answered questions
 	func startGame() {
 		gameScore = 0
 		questionScore = 5
 		answeredQuestions = []
 	}
-	
+
+	// Filters questions according to selected books
 	func filterQuestions(to books: [Int]) {
 		filteredQuestions = allQuestions.filter { books.contains($0.book) }
 	}
 	
+	// Generates a new question and shuffles possible answers
 	func newQuestion() {
 		if filteredQuestions.isEmpty {
 			return
@@ -66,6 +78,7 @@ class Game: ObservableObject {
 		questionScore = 5
 	}
 	
+	// Marks the current question as correct and adds the question score to the game score
 	func correct() {
 		answeredQuestions.append(currentQuestion.id)
 		
@@ -74,6 +87,7 @@ class Game: ObservableObject {
 		}
 	}
 	
+	// Ends the game and saves the game score to recent scores
 	func endGame() {
 		recentScores[2] = recentScores[1]
 		recentScores[1] = recentScores[0]
@@ -82,6 +96,7 @@ class Game: ObservableObject {
 		saveScores()
 	}
 	
+	// Loads the recent scores from saved data
 	func loadScores() {
 		do {
 			let data = try Data(contentsOf: savePath)
@@ -91,6 +106,9 @@ class Game: ObservableObject {
 		}
 	}
 	
+	// MARK: - Private functions for saving and decoding data
+	
+	// Saves the recent scores to a file
 	private func saveScores() {
 		do {
 			let data = try JSONEncoder().encode(recentScores)
@@ -100,6 +118,7 @@ class Game: ObservableObject {
 		}
 	}
 	
+	// Decodes the questions from a JSON file
 	private func decodeQuestions() {
 		if let url = Bundle.main.url(forResource: "trivia", withExtension: "json") {
 			do {

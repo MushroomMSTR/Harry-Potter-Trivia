@@ -8,11 +8,18 @@
 import SwiftUI
 import AVKit
 
+// MARK: - Gameplay View
+
+// Define the Gameplay struct that conforms to the View protocol.
 struct Gameplay: View {
-	
+	// Create environment variables for the game and dismissal function.
 	@Environment(\.dismiss) private var dismiss
 	@EnvironmentObject private var game: Game
+	
+	// Declare namespace for the matchedGeometryEffect
 	@Namespace private var namespace
+	
+	// Create state variables for the audio players and animations.
 	@State private var musicPlayer: AVAudioPlayer!
 	@State private var sfxPlayer: AVAudioPlayer!
 	@State private var animateViewsIn = false
@@ -24,9 +31,13 @@ struct Gameplay: View {
 	@State private var revealBook = false
 	@State private var wrongAnswersTapped: [Int] = []
 	
-    var body: some View {
+	// Define the body of the Gameplay view.
+	var body: some View {
+		// Use a GeometryReader to get the size of the view.
 		GeometryReader { geo in
+			// Stack the elements on top of each other.
 			ZStack {
+				// Display the background image.
 				Image("hogwarts")
 					.resizable()
 					.frame(width: geo.size.width * 3, height: geo.size.height * 1.05)
@@ -326,6 +337,8 @@ struct Gameplay: View {
 		}
 	}
 	
+	// MARK: - Code for the helper functions
+	
 	private func playMusic() {
 		let songs = ["Audio/deep-in-the-dell", "Audio/spellcraft", "Audio/let-the-mystery-unfold", "Audio/hiding-place-in-the-forest"]
 		
@@ -372,11 +385,14 @@ struct Gameplay: View {
 	}
 }
 
+// MARK: - Preview
+
+// Define a PreviewProvider for the Gameplay view.
 struct Gameplay_Previews: PreviewProvider {
-    static var previews: some View {
+	static var previews: some View {
 		VStack {
 			Gameplay()
 				.environmentObject(Game())
 		}
-    }
+	}
 }
